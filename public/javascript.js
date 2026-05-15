@@ -1,9 +1,7 @@
-// 1. Координаты и настройки
 const TARGET_LAT = 42.783704;
 const TARGET_LON = 75.753442;
-const ALLOWED_RADIUS = 2000; // Увеличили до 2км для уверенности
+const ALLOWED_RADIUS = 5000; // Увеличили до 5км для теста
 
-// Функция расчета расстояния
 function getDistance(lat1, lon1, lat2, lon2) {
     const R = 6371e3;
     const phi1 = lat1 * Math.PI / 180;
@@ -17,29 +15,27 @@ function getDistance(lat1, lon1, lat2, lon2) {
     return R * c;
 }
 
-// ГЛАВНАЯ ФУНКЦИЯ КНОПКИ
-async function getTicket() {
-    console.log("Кнопка нажата, запрашиваем геолокацию...");
-    
-    if (!navigator.geolocation) {
-        alert("Геолокация не поддерживается вашим браузером");
-        return;
-    }
-
-    navigator.geolocation.getCurrentPosition(async (position) => {
-        const userLat = position.coords.latitude;
-        const userLon = position.coords.longitude;
-        const distance = getDistance(userLat, userLon, TARGET_LAT, TARGET_LON);
-
-        if (distance > ALLOWED_RADIUS) {
-            alert(`Вы слишком далеко (${Math.round(distance)}м). Нужно быть ближе ${ALLOWED_RADIUS}м.`);
+// Эта функция сработает ПРИНУДИТЕЛЬНО при клике
+document.addEventListener('click', async function(e) {
+    if (e.target && e.target.id === 'ticketBtn') {
+        console.log("Клик зафиксирован!");
+        
+        if (!navigator.geolocation) {
+            alert("Включите GPS в браузере");
             return;
         }
 
-        const category = document.getElementById('category').value;
-        const count = document.getElementById('count').value;
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const distance = getDistance(position.coords.latitude, position.coords.longitude, TARGET_LAT, TARGET_LON);
 
-        try {
+            if (distance > ALLOWED_RADIUS) {
+                alert("Вы слишком далеко: " + Math.round(distance) + "м.");
+                return;
+            }
+
+            const category = document.getElementById('category').value;
+            const count = document.getElementById('count').value;
+
             const response = await fetch('/api/get-ticket', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -48,24 +44,12 @@ async function getTicket() {
 
             const data = await response.json();
             if (data.success) {
-                alert(`Ваш талон: ${data.ticketNumber}\nВаше место в очереди: ${data.position}`);
-                // Можно добавить редирект на страницу талона, если она есть
+                alert("Ваш номер: " + data.ticketNumber);
             } else {
-                alert("Ошибка сервера: " + data.error);
+                alert("Ошибка: " + data.error);
             }
-        } catch (error) {
-            console.error("Ошибка при запросе:", error);
-            alert("Не удалось связаться с сервером.");
-        }
-    }, (error) => {
-        alert("Ошибка GPS: разрешите доступ к местоположению в браузере.");
-    });
-}
-
-// Привязываем функцию к кнопке после загрузки страницы
-document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.querySelector('button'); // Находит первую кнопку на странице
-    if (btn) {
-        btn.onclick = getTicket;
+        }, (err) => {
+            alert("Нужно разрешить доступ к GPS!");
+        });
     }
 });
