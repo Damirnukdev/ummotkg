@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пост Охраны - Ummot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Пост охраны</h2>
+        <input type="text" id="t-id" placeholder="ID талона или скан">
+        <button onclick="verify()" style="background: #28a745; color: white;">ПРОВЕРИТЬ</button>
+        <div id="res" style="margin-top: 20px; font-weight: bold;"></div>
+    </div>
+    <script>
+        async function verify() {
+            const id = document.getElementById('t-id').value;
+            const r = await fetch('/api/verify-ticket', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ ticketId: id })
+            });
+            const d = await r.json();
+            document.getElementById('res').innerHTML = d.error ? 
+                `<span style="color:red">ОШИБКА: ${d.error}</span>` : 
+                `<span style="color:green">ПРОХОДИТЕ: ${d.ticket.number}</span>`;
+        }
+    </script>
+</body>
+</html>

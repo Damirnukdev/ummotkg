@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 320px;
+    text-align: center;
+}
+label {
+    display: block;
+    margin: 15px 0 5px;
+    text-align: left;
+    font-weight: bold;
+}
+select, input, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    /* Желтый цвет как на логотипе */
+    background-color: #ffb400; 
+    color: #1a1a1a;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #e6a200; /* Немного темнее при наведении */
+}
+button:hover { background-color: #0056b3; }
+.hidden { display: none; }
+.ticket-card {
+    border: 2px dashed #007bff;
+    padding: 20px;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+}
+.status-badge {
+    background-color: #ffc107;
+    padding: 5px;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+}
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 340px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрирует всё внутри, включая логотип */
+}
