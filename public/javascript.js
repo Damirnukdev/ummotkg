@@ -2,9 +2,9 @@ let deviceToken = localStorage.getItem('deviceToken') || '';
 let currentTicketId = ''; 
 
 // КООРДИНАТЫ: Ладышев көчөсү, 25/2, Кемин
-const TARGET_LAT = 42.7885; 
-const TARGET_LON = 75.6908; 
-const ALLOWED_RADIUS = 500; // Радиус в метрах
+const TARGET_LAT = 42.783704;
+const TARGET_LON = 75.753442;
+const ALLOWED_RADIUS = 1000; // Радиус в метрах
 
 window.onload = async function() {
     updateDateTime();
