@@ -19,9 +19,9 @@ const MAX_LIMIT = 999;
 async function initSystemConfig() {
     await db.hSet('system:config', {
         status: 'OPEN',       // Жестко ставим статус ОТКРЫТО для тестов
-        timeStart: '06:00',   
-        timeEnd: '09:00',     
-        workDays: '1,2,3,4,5' 
+        timeStart: '15:00',   
+        timeEnd: '17:00',     
+        workDays: '1,2,3,4,5,6,7' 
     });
     console.log('Настройки очереди принудительно обновлены в БД.');
 }
